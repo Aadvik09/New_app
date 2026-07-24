@@ -29,23 +29,26 @@ st.markdown(
     [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"] {display:flex !important;visibility:visible !important;align-items:center !important;justify-content:center !important;width:38px !important;height:38px !important;min-width:38px !important;min-height:38px !important;background:#123550 !important;border:1px solid rgba(255,255,255,.28) !important;border-radius:10px !important;box-shadow:0 6px 16px rgba(12,35,55,.2) !important;}
     [data-testid="stSidebarCollapsedControl"] svg, [data-testid="stExpandSidebarButton"] svg {fill:#fff !important;}
     html, body, [class*="css"] {font-family:Inter, sans-serif; color:#263248;}
-    .stApp {background:linear-gradient(135deg,#eff3fb 0%,#f7f8fc 56%,#edf2fb 100%);}
-    .block-container {max-width:1280px; padding:1.1rem 1.15rem 1.35rem;}
-    .app-shell {background:rgba(255,255,255,.93);border:1px solid rgba(226,231,242,.9);border-radius:28px;padding:1.25rem 1.35rem 1.45rem;box-shadow:0 20px 54px rgba(55,70,110,.12);}
-    .brand {font-size:1.25rem;font-weight:800;letter-spacing:-.05em;color:#1f2c43;margin:0;}.brand span{color:#3471eb}.tagline {font-size:.76rem;color:#8a99b0;margin:.18rem 0 1rem;}
-    .left-panel {background:#fbfbff;border-radius:20px;padding:1.15rem 1.05rem;min-height:620px;border:1px solid #f0f1f7;}
-    .workspace {padding:.55rem .55rem 0 1.35rem;}.workspace-title {font-size:1.08rem;font-weight:800;color:#263248;margin:.1rem 0 .15rem;}.workspace-copy{font-size:.81rem;color:#91a0b6;margin:0 0 1rem;}
-    .step-label {display:flex;align-items:center;gap:.6rem;margin:.3rem 0 1rem;color:#91a1b9;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}.step-number {display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:#2f6df0;color:white;font-family:'DM Mono',monospace;letter-spacing:0;}.step-muted .step-number{background:#eef3ff;color:#7f9ce4;}
-    [data-testid="stFileUploader"] {border:2px dashed #dce5f3;border-radius:21px;background:#fff;min-height:198px;display:flex;align-items:center;justify-content:center;padding:.85rem;transition:.2s ease;}
+    .stApp {background:#eef2f9;}
+    .block-container {max-width:1320px; padding:1.05rem 1.2rem 1.4rem;}
+    div[data-testid="stHorizontalBlock"]:has(.step-label) {background:#fff;border:1px solid #e4e9f2;border-radius:28px;min-height:655px;overflow:hidden;gap:0 !important;box-shadow:0 18px 48px rgba(50,67,105,.12);}
+    .brand,.tagline {display:none;}
+    div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child {background:#fbfbff;padding:2.05rem 2rem;min-height:655px;}
+    div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child {padding:2.2rem 2.3rem 1.5rem;min-height:655px;border-left:1px solid #eef1f6;background:#fff;}.workspace-title {font-size:1.05rem;font-weight:800;color:#273249;margin:.1rem 0 .12rem;}.workspace-title:before {content:'▥';display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;background:#f1f5fb;color:#60728e;font-size:1rem;margin-right:.65rem;vertical-align:middle;}.workspace-copy{font-size:.79rem;color:#99a7ba;margin:.2rem 0 1.3rem 2.55rem;}
+    .step-label {display:flex;align-items:center;gap:.7rem;margin:.05rem 0 1.25rem;color:#8ea0bb;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}.step-number {display:inline-flex;align-items:center;justify-content:center;width:33px;height:33px;border-radius:50%;background:#2f6df0;color:white;font-family:'DM Mono',monospace;letter-spacing:0;}.step-muted {margin-top:2.2rem;}.step-muted .step-number{background:#edf3ff;color:#7f9ce4;}
+    [data-testid="stFileUploader"] {border:2px dashed #dce5f3;border-radius:22px;background:#fff;min-height:208px;display:flex;align-items:center;justify-content:center;padding:.85rem;transition:.2s ease;}
     [data-testid="stFileUploader"]:hover {border-color:#7fa6ff;background:#fbfdff;}
     [data-testid="stFileUploader"] section {background:transparent;border:0;}
     [data-testid="stFileUploader"] button {background:#f7f9fe;color:#2f6df0;border:1px solid #e6ecf8;border-radius:10px;font-weight:700;}
-    .upload-note {font-size:.76rem;color:#92a0b4;text-align:center;line-height:1.6;margin:.85rem 0 1.3rem;}.upload-note strong{display:block;color:#27344b;font-size:.9rem;margin-bottom:.15rem;}
+    .upload-note {font-size:.76rem;color:#92a0b4;text-align:center;line-height:1.6;margin:.85rem 0 1.5rem;}.upload-note strong{display:block;color:#27344b;font-size:.9rem;margin-bottom:.15rem;}
     .dataset-ready {background:#ecf8f2;border:1px solid #c8ebda;border-radius:12px;padding:.7rem .8rem;color:#277557;font-size:.78rem;margin:.75rem 0 1rem;}
     .config-title {font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#a0aec3;margin:.35rem 0 .45rem;}
     [data-testid="stSelectbox"] div[data-baseweb="select"] > div, [data-testid="stMultiSelect"] div[data-baseweb="select"] > div {border-radius:12px;border-color:#e5eaf4;background:#fff;min-height:46px;}
     div.stButton > button {border:0;border-radius:12px;background:#7ca4f7;color:white;font-weight:800;min-height:52px;width:100%;box-shadow:0 8px 18px rgba(79,124,224,.18);}.stButton>button:hover {background:#4e81ec;color:white;}
-    .empty-workspace {height:370px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-radius:18px;background:linear-gradient(145deg,#fff 0%,#fbfcff 100%);border:1px solid #f0f2f7;color:#a2afc2;}.empty-icon {font-size:3.2rem;line-height:1;color:#dfe5ef;margin-bottom:.7rem;}.empty-workspace strong{color:#7e8da3;font-size:1rem;}.empty-workspace p{font-size:.78rem;margin:.35rem 0 0;}
+    [data-testid="stSelectbox"] button,[data-testid="stSelectbox"] [role="combobox"] {background:#fff !important;color:#52637c !important;border-color:#e5eaf4 !important;}
+    [data-testid="stSelectbox"] button:disabled,[data-testid="stSelectbox"] [role="combobox"][aria-disabled="true"] {background:#fbfcff !important;color:#a4b0c2 !important;}
+    div.stButton > button:disabled {background:#eef3ff !important;color:#aab9d1 !important;box-shadow:none !important;opacity:1 !important;}
+    .empty-workspace {height:450px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;border-radius:18px;background:#fff;color:#a2afc2;}.empty-icon {font-size:3.2rem;line-height:1;color:#dfe5ef;margin-bottom:.7rem;}.empty-workspace strong{color:#8a98ad;font-size:1rem;}.empty-workspace p{font-size:.78rem;margin:.35rem 0 0;}
     .privacy {font-size:.72rem;line-height:1.45;color:#84603a;border-left:3px solid #f1bf70;padding:.55rem .65rem;background:#fffaf1;border-radius:4px;margin:.7rem 0;}
     .result-card {background:#f9fbff;border:1px solid #e8edf6;border-radius:16px;padding:1rem;margin-top:.7rem;}
     div[data-testid="stMetric"] {background:#fff;border:1px solid #edf0f6;border-radius:12px;padding:.7rem;} div[data-testid="stMetricLabel"] {font-size:.69rem;color:#8f9db3;} div[data-testid="stMetricValue"] {font-size:1rem;color:#27344b;}
@@ -55,7 +58,7 @@ st.markdown(
     [data-testid="stSidebarCollapseButton"] button {background:rgba(255,255,255,.08) !important;border-radius:8px !important;}
     .sidebar-brand {font-size:1.28rem;font-weight:800;letter-spacing:-.06em;margin-bottom:.15rem;}.sidebar-brand span{color:#73a7ff}.sidebar-caption {font-size:.73rem;line-height:1.5;color:#adc0d2 !important;margin-bottom:1.5rem;}
     .side-nav {font-size:.73rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#87a5c0 !important;margin:1.25rem 0 .55rem;}.side-step {padding:.62rem .72rem;border-radius:10px;background:rgba(255,255,255,.065);font-size:.79rem;margin:.38rem 0;color:#e7f0fb !important;}.side-step span{color:#79aaff !important;font-family:'DM Mono',monospace;margin-right:.5rem;}
-    @media(max-width:800px){.workspace{padding:1.1rem 0 0}.left-panel{min-height:0}.app-shell{padding:.85rem}.block-container{padding:.45rem}.empty-workspace{height:220px}}
+    @media(max-width:800px){div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child,div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child{min-height:0;padding:1.35rem;border-left:0;border-top:1px solid #eef1f6}div[data-testid="stHorizontalBlock"]:has(.step-label){min-height:0}.block-container{padding:.45rem}.empty-workspace{height:220px}}
     </style>""",
     unsafe_allow_html=True,
 )
@@ -109,11 +112,9 @@ with st.sidebar:
     st.caption("Privacy signals are empirical diagnostics, not a release guarantee.")
 
 
-st.markdown('<div class="app-shell"><p class="brand">Bootstrap<span>MD</span></p><p class="tagline">Clinical research data synthesis workspace</p>', unsafe_allow_html=True)
-left, right = st.columns([.94, 2.06], gap="large")
+left, right = st.columns([.94, 2.06], gap="small")
 
 with left:
-    st.markdown('<div class="left-panel">', unsafe_allow_html=True)
     st.markdown('<div class="step-label"><span class="step-number">1</span>Source dataset</div>', unsafe_allow_html=True)
     uploaded = st.file_uploader(
         "Import CSV data",
@@ -169,12 +170,10 @@ with left:
                 st.error(f"Synthesis did not finish: {exc}")
             finally:
                 progress.empty()
-    st.markdown('</div>', unsafe_allow_html=True)
-
 with right:
-    st.markdown('<div class="workspace"><p class="workspace-title">Analysis workspace</p><p class="workspace-copy">Review data readiness, compare methods, and download verified outputs.</p>', unsafe_allow_html=True)
+    st.markdown('<p class="workspace-title">Analysis workspace</p><p class="workspace-copy">Review data readiness, compare methods, and download verified outputs.</p>', unsafe_allow_html=True)
     if data is None:
-        st.markdown('<div class="empty-workspace"><div class="empty-icon">&#128190;</div><strong>Workspace empty</strong><p>Upload a dataset to begin statistical synthesis.</p></div>', unsafe_allow_html=True)
+        st.markdown('<div class="empty-workspace"><div class="empty-icon">▥</div><strong>Workspace empty</strong><p>Upload a dataset to begin statistical synthesis.</p></div>', unsafe_allow_html=True)
     else:
         st.markdown("#### Dataset readiness")
         schema = st.data_editor(
@@ -219,5 +218,3 @@ with right:
         report = f"BootstrapMD synthesis report\nGenerated: {datetime.now():%Y-%m-%d %H:%M}\nGoal: {st.session_state.goal}\n\n" + scorecard.to_csv(index=False)
         download_columns[-1].download_button("Download scorecard", report.encode(), file_name="bootstrapmd_scorecard.csv", mime="text/csv")
         st.markdown("</div>", unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
