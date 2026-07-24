@@ -38,8 +38,10 @@ st.markdown(
     .step-label {display:flex;align-items:center;gap:.7rem;margin:.05rem 0 1.25rem;color:#8ea0bb;font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}.step-number {display:inline-flex;align-items:center;justify-content:center;width:33px;height:33px;border-radius:50%;background:#2f6df0;color:white;font-family:'DM Mono',monospace;letter-spacing:0;}.step-muted {margin-top:2.2rem;}.step-muted .step-number{background:#edf3ff;color:#7f9ce4;}
     [data-testid="stFileUploader"] {border:2px dashed #dce5f3;border-radius:22px;background:#fff;min-height:208px;display:flex;align-items:center;justify-content:center;padding:.85rem;transition:.2s ease;}
     [data-testid="stFileUploader"]:hover {border-color:#7fa6ff;background:#fbfdff;}
-    [data-testid="stFileUploader"] section {background:transparent;border:0;}
-    [data-testid="stFileUploader"] button {background:#f7f9fe;color:#2f6df0;border:1px solid #e6ecf8;border-radius:10px;font-weight:700;}
+    [data-testid="stFileUploader"] section {min-height:184px;background:transparent;border:0;position:relative;}
+    [data-testid="stFileUploader"] section > span {position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max-content;}
+    [data-testid="stFileUploader"] section > div {display:none;}
+    [data-testid="stFileUploader"] button {background:#f7f9fe;color:#2f6df0;border:1px solid #e6ecf8;border-radius:11px;font-weight:700;font-size:1rem;padding:.66rem 1.45rem;box-shadow:0 5px 14px rgba(47,109,240,.08);}
     .upload-note {font-size:.76rem;color:#92a0b4;text-align:center;line-height:1.6;margin:.85rem 0 1.5rem;}.upload-note strong{display:block;color:#27344b;font-size:.9rem;margin-bottom:.15rem;}
     .dataset-ready {background:#ecf8f2;border:1px solid #c8ebda;border-radius:12px;padding:.7rem .8rem;color:#277557;font-size:.78rem;margin:.75rem 0 1rem;}
     .config-title {font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#a0aec3;margin:.35rem 0 .45rem;}
@@ -58,7 +60,19 @@ st.markdown(
     [data-testid="stSidebarCollapseButton"] button {background:rgba(255,255,255,.08) !important;border-radius:8px !important;}
     .sidebar-brand {font-size:1.28rem;font-weight:800;letter-spacing:-.06em;margin-bottom:.15rem;}.sidebar-brand span{color:#73a7ff}.sidebar-caption {font-size:.73rem;line-height:1.5;color:#adc0d2 !important;margin-bottom:1.5rem;}
     .side-nav {font-size:.73rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#87a5c0 !important;margin:1.25rem 0 .55rem;}.side-step {padding:.62rem .72rem;border-radius:10px;background:rgba(255,255,255,.065);font-size:.79rem;margin:.38rem 0;color:#e7f0fb !important;}.side-step span{color:#79aaff !important;font-family:'DM Mono',monospace;margin-right:.5rem;}
-    .tour-icon {display:flex;align-items:center;justify-content:center;width:66px;height:66px;border-radius:20px;background:#edf3ff;color:#2f6df0;font-size:2rem;margin:.2rem auto .8rem;}.tour-title{text-align:center;font-size:1.2rem;font-weight:800;color:#273249;margin:.15rem 0 .45rem;}.tour-copy{text-align:center;font-size:.88rem;line-height:1.55;color:#65758c;margin:0 auto 1rem;max-width:430px;}.tour-tip{background:#f7f9fd;border:1px solid #e6ebf4;border-radius:12px;padding:.75rem .85rem;color:#52647c;font-size:.8rem;}
+    .tour-panel {font-family:'Inter',sans-serif;}.tour-kicker{font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#83a9ff;margin-bottom:.35rem;}.tour-heading{font-size:1.12rem;font-weight:800;color:#fff;margin:0 0 .35rem;}.tour-description{font-size:.86rem;line-height:1.5;color:#d3def0;margin:0;}.tour-help{font-size:.76rem;color:#9fb2cf;margin-top:.65rem;}
+    div[data-testid="stLayoutWrapper"]:has(.tour-panel) {position:fixed !important;right:26px;bottom:24px;z-index:1000002;width:min(390px,calc(100vw - 40px)) !important;background:#10253b;border:1px solid rgba(150,182,255,.25);border-radius:18px;box-shadow:0 20px 56px rgba(8,24,43,.34);padding:1rem 1rem .85rem;}
+    div[data-testid="stLayoutWrapper"]:has(.tour-panel) [data-testid="stLayoutWrapper"] {position:static !important;width:auto;background:transparent;border:0;box-shadow:none;padding:0;}
+    div[data-testid="stLayoutWrapper"]:has(.tour-panel) button {border-radius:10px;font-weight:750;white-space:nowrap;padding:.48rem .35rem;font-size:.82rem;}
+    .tour-step-0 ~ [data-testid="stFileUploader"], body:has(.tour-step-0) [data-testid="stFileUploader"] {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:6px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
+    body:has(.tour-step-0) [data-testid="stFileUploader"]::before {content:'Start here  ↓';position:absolute;left:50%;top:-49px;transform:translateX(-50%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;letter-spacing:.01em;box-shadow:0 8px 18px rgba(47,109,240,.28);}
+    body:has(.tour-step-1) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
+    body:has(.tour-step-1) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child::before {content:'Your setup panel  ←';position:absolute;right:-20px;top:22px;transform:translateX(100%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
+    body:has(.tour-step-2) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
+    body:has(.tour-step-2) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child::before {content:'Results appear here  ↓';position:absolute;left:50%;top:18px;transform:translateX(-50%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
+    body:has(.tour-step-3) [data-testid="stSidebar"] {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
+    body:has(.tour-step-3) [data-testid="stSidebar"]::after {content:'Replay this guide anytime  ↓';position:absolute;left:20px;bottom:84px;white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
+    @media (max-width:800px) {div[data-testid="stLayoutWrapper"]:has(.tour-panel){right:16px;bottom:16px;}body:has(.tour-step-1) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child::before{display:none;}}
     @media(max-width:800px){div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child,div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child{min-height:0;padding:1.35rem;border-left:0;border-top:1px solid #eef1f6}div[data-testid="stHorizontalBlock"]:has(.step-label){min-height:0}.block-container{padding:.45rem}.empty-workspace{height:220px}}
     </style>""",
     unsafe_allow_html=True,
@@ -102,39 +116,39 @@ def app_data() -> pd.DataFrame | None:
 
 
 TOUR_STEPS = [
-    {"icon": "↑", "title": "Start with your data", "copy": "Upload a CSV in the Source dataset panel. BootstrapMD reads the file locally and opens the workspace when it is ready.", "tip": "Look for the large dashed upload card on the left."},
-    {"icon": "▦", "title": "Confirm the schema", "copy": "Once a file is loaded, review the inferred column types and correct anything that needs attention before generation.", "tip": "The editable schema table appears in the analysis workspace."},
-    {"icon": "⚙", "title": "Set up synthesis", "copy": "Choose the number of synthetic records, your goal, and the generation methods you want to compare.", "tip": "Start with the default 1,000 records for a quick first run."},
-    {"icon": "✦", "title": "Generate and compare", "copy": "Generate synthetic data and the app will compare selected methods using fidelity, utility, and privacy indicators.", "tip": "The generation button stays in the left workflow panel."},
-    {"icon": "⇩", "title": "Review and download", "copy": "Use the scorecard to understand trade-offs, then download the synthetic CSV files and report you need.", "tip": "Privacy indicators are empirical checks, not a guarantee that data is safe to share."},
+    {"title": "Bring in a source dataset", "copy": "Drop in a CSV here. We will infer its structure before you generate anything.", "tip": "The highlighted upload card is the first stop."},
+    {"title": "Choose your synthesis setup", "copy": "This panel sets the population size, goal, and generation methods. It unlocks after your CSV is loaded.", "tip": "Start with the suggested settings for a fast first run."},
+    {"title": "Work in the analysis space", "copy": "Your data preview, editable schema, checks, scorecard, and downloads all appear here.", "tip": "This area updates as you move through the workflow."},
+    {"title": "Keep the guide close", "copy": "The sidebar keeps the workflow visible. You can reopen this guide whenever you need it.", "tip": "Use the Play quick tour button at the bottom of the sidebar."},
 ]
 
 st.session_state.setdefault("tour_open", True)
 st.session_state.setdefault("tour_step", 0)
 
 
-@st.dialog("A quick tour of BootstrapMD")
 def show_tour() -> None:
     step_index = st.session_state.tour_step
     step = TOUR_STEPS[step_index]
-    st.progress((step_index + 1) / len(TOUR_STEPS), text=f"Step {step_index + 1} of {len(TOUR_STEPS)}")
-    st.markdown(
-        f'<div class="tour-icon">{step["icon"]}</div><div class="tour-title">{step["title"]}</div>'
-        f'<div class="tour-copy">{step["copy"]}</div><div class="tour-tip">{step["tip"]}</div>',
-        unsafe_allow_html=True,
-    )
-    back, skip, next_step = st.columns(3)
-    if back.button("Back", key="tour_back", disabled=step_index == 0, use_container_width=True):
-        st.session_state.tour_step -= 1
-        st.rerun()
-    if skip.button("Skip tour", key="tour_skip", use_container_width=True):
-        st.session_state.tour_open = False
-        st.rerun()
-    label = "Start exploring" if step_index == len(TOUR_STEPS) - 1 else "Next"
-    if next_step.button(label, key="tour_next", type="primary", use_container_width=True):
-        st.session_state.tour_open = False if step_index == len(TOUR_STEPS) - 1 else True
-        st.session_state.tour_step = min(step_index + 1, len(TOUR_STEPS) - 1)
-        st.rerun()
+    with st.container(border=True):
+        st.markdown(
+            f'<div class="tour-panel tour-step-{step_index}"><div class="tour-kicker">Guided tour · {step_index + 1} of {len(TOUR_STEPS)}</div>'
+            f'<p class="tour-heading">{step["title"]}</p><p class="tour-description">{step["copy"]}</p>'
+            f'<div class="tour-help">{step["tip"]}</div></div>',
+            unsafe_allow_html=True,
+        )
+        st.progress((step_index + 1) / len(TOUR_STEPS))
+        back, skip, next_step = st.columns([.8, 1, 1])
+        if back.button("Back", key="tour_back", disabled=step_index == 0, use_container_width=True):
+            st.session_state.tour_step -= 1
+            st.rerun()
+        if skip.button("Skip", key="tour_skip", use_container_width=True):
+            st.session_state.tour_open = False
+            st.rerun()
+        label = "Finish" if step_index == len(TOUR_STEPS) - 1 else "Next"
+        if next_step.button(label, key="tour_next", type="primary", use_container_width=True):
+            st.session_state.tour_open = step_index != len(TOUR_STEPS) - 1
+            st.session_state.tour_step = min(step_index + 1, len(TOUR_STEPS) - 1)
+            st.rerun()
 
 
 if st.session_state.tour_open:
