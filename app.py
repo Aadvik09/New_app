@@ -23,14 +23,14 @@ st.markdown(
     """<style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap');
     /* A quiet, light utility strip keeps the sidebar reopen control usable. */
-    [data-testid="stHeader"] {background:#f2f6fc !important;height:3.25rem !important;border:0 !important;}
-    [data-testid="stToolbar"] {background:transparent !important;padding:.4rem .7rem !important;}
+    [data-testid="stHeader"] {position:absolute !important;background:transparent !important;height:0 !important;border:0 !important;z-index:1000000 !important;}
+    [data-testid="stToolbar"] {background:transparent !important;padding:0 !important;}
     [data-testid="stDecoration"], #MainMenu, footer, [data-testid="stMainMenuButton"], [data-testid="stBaseButton-header"] {display:none !important;}
-    [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"] {display:flex !important;visibility:visible !important;align-items:center !important;justify-content:center !important;width:38px !important;height:38px !important;min-width:38px !important;min-height:38px !important;background:#123550 !important;border:1px solid rgba(255,255,255,.28) !important;border-radius:10px !important;box-shadow:0 6px 16px rgba(12,35,55,.2) !important;}
+    [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"] {display:flex !important;visibility:visible !important;position:fixed !important;left:14px !important;top:14px !important;align-items:center !important;justify-content:center !important;width:38px !important;height:38px !important;min-width:38px !important;min-height:38px !important;background:#111827 !important;border:1px solid rgba(255,255,255,.24) !important;border-radius:10px !important;box-shadow:0 6px 16px rgba(12,35,55,.24) !important;}
     [data-testid="stSidebarCollapsedControl"] svg, [data-testid="stExpandSidebarButton"] svg {fill:#fff !important;}
     html, body, [class*="css"] {font-family:Inter, sans-serif; color:#263248;}
     .stApp {background:#eef2f9;}
-    .block-container {max-width:1320px; padding:1.05rem 1.2rem 1.4rem;}
+    .block-container {max-width:1320px; padding:4.4rem 1.2rem 1.4rem;}
     div[data-testid="stHorizontalBlock"]:has(.step-label) {background:#fff;border:1px solid #e4e9f2;border-radius:28px;min-height:655px;overflow:hidden;gap:0 !important;box-shadow:0 18px 48px rgba(50,67,105,.12);}
     .brand,.tagline {display:none;}
     div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child {background:#fbfbff;padding:2.05rem 2rem;min-height:655px;}
@@ -58,6 +58,7 @@ st.markdown(
     [data-testid="stSidebarCollapseButton"] button {background:rgba(255,255,255,.08) !important;border-radius:8px !important;}
     .sidebar-brand {font-size:1.28rem;font-weight:800;letter-spacing:-.06em;margin-bottom:.15rem;}.sidebar-brand span{color:#73a7ff}.sidebar-caption {font-size:.73rem;line-height:1.5;color:#adc0d2 !important;margin-bottom:1.5rem;}
     .side-nav {font-size:.73rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#87a5c0 !important;margin:1.25rem 0 .55rem;}.side-step {padding:.62rem .72rem;border-radius:10px;background:rgba(255,255,255,.065);font-size:.79rem;margin:.38rem 0;color:#e7f0fb !important;}.side-step span{color:#79aaff !important;font-family:'DM Mono',monospace;margin-right:.5rem;}
+    .tour-icon {display:flex;align-items:center;justify-content:center;width:66px;height:66px;border-radius:20px;background:#edf3ff;color:#2f6df0;font-size:2rem;margin:.2rem auto .8rem;}.tour-title{text-align:center;font-size:1.2rem;font-weight:800;color:#273249;margin:.15rem 0 .45rem;}.tour-copy{text-align:center;font-size:.88rem;line-height:1.55;color:#65758c;margin:0 auto 1rem;max-width:430px;}.tour-tip{background:#f7f9fd;border:1px solid #e6ebf4;border-radius:12px;padding:.75rem .85rem;color:#52647c;font-size:.8rem;}
     @media(max-width:800px){div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child,div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child{min-height:0;padding:1.35rem;border-left:0;border-top:1px solid #eef1f6}div[data-testid="stHorizontalBlock"]:has(.step-label){min-height:0}.block-container{padding:.45rem}.empty-workspace{height:220px}}
     </style>""",
     unsafe_allow_html=True,
@@ -100,6 +101,46 @@ def app_data() -> pd.DataFrame | None:
     return st.session_state.get("source_data")
 
 
+TOUR_STEPS = [
+    {"icon": "↑", "title": "Start with your data", "copy": "Upload a CSV in the Source dataset panel. BootstrapMD reads the file locally and opens the workspace when it is ready.", "tip": "Look for the large dashed upload card on the left."},
+    {"icon": "▦", "title": "Confirm the schema", "copy": "Once a file is loaded, review the inferred column types and correct anything that needs attention before generation.", "tip": "The editable schema table appears in the analysis workspace."},
+    {"icon": "⚙", "title": "Set up synthesis", "copy": "Choose the number of synthetic records, your goal, and the generation methods you want to compare.", "tip": "Start with the default 1,000 records for a quick first run."},
+    {"icon": "✦", "title": "Generate and compare", "copy": "Generate synthetic data and the app will compare selected methods using fidelity, utility, and privacy indicators.", "tip": "The generation button stays in the left workflow panel."},
+    {"icon": "⇩", "title": "Review and download", "copy": "Use the scorecard to understand trade-offs, then download the synthetic CSV files and report you need.", "tip": "Privacy indicators are empirical checks, not a guarantee that data is safe to share."},
+]
+
+st.session_state.setdefault("tour_open", True)
+st.session_state.setdefault("tour_step", 0)
+
+
+@st.dialog("A quick tour of BootstrapMD")
+def show_tour() -> None:
+    step_index = st.session_state.tour_step
+    step = TOUR_STEPS[step_index]
+    st.progress((step_index + 1) / len(TOUR_STEPS), text=f"Step {step_index + 1} of {len(TOUR_STEPS)}")
+    st.markdown(
+        f'<div class="tour-icon">{step["icon"]}</div><div class="tour-title">{step["title"]}</div>'
+        f'<div class="tour-copy">{step["copy"]}</div><div class="tour-tip">{step["tip"]}</div>',
+        unsafe_allow_html=True,
+    )
+    back, skip, next_step = st.columns(3)
+    if back.button("Back", key="tour_back", disabled=step_index == 0, use_container_width=True):
+        st.session_state.tour_step -= 1
+        st.rerun()
+    if skip.button("Skip tour", key="tour_skip", use_container_width=True):
+        st.session_state.tour_open = False
+        st.rerun()
+    label = "Start exploring" if step_index == len(TOUR_STEPS) - 1 else "Next"
+    if next_step.button(label, key="tour_next", type="primary", use_container_width=True):
+        st.session_state.tour_open = False if step_index == len(TOUR_STEPS) - 1 else True
+        st.session_state.tour_step = min(step_index + 1, len(TOUR_STEPS) - 1)
+        st.rerun()
+
+
+if st.session_state.tour_open:
+    show_tour()
+
+
 with st.sidebar:
     st.markdown('<div class="sidebar-brand">Bootstrap<span>MD</span></div><p class="sidebar-caption">A focused workspace for research-grade synthetic data.</p>', unsafe_allow_html=True)
     st.markdown('<p class="side-nav">Workflow</p>', unsafe_allow_html=True)
@@ -110,6 +151,10 @@ with st.sidebar:
     st.divider()
     st.caption("Fast mode keeps modeling and scorecards responsive on large CSV files.")
     st.caption("Privacy signals are empirical diagnostics, not a release guarantee.")
+    if st.button("Play quick tour", key="replay_tour", use_container_width=True):
+        st.session_state.tour_step = 0
+        st.session_state.tour_open = True
+        st.rerun()
 
 
 left, right = st.columns([.94, 2.06], gap="small")
