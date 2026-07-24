@@ -18,12 +18,11 @@ from synth_engine import (
 )
 
 
-st.set_page_config(page_title="BootstrapMD", page_icon="B", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="BootstrapMD", page_icon="B", layout="wide", initial_sidebar_state="expanded")
 st.markdown(
     """<style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap');
     [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], #MainMenu, footer {display:none !important;}
-    [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"] {display:none !important;}
     html, body, [class*="css"] {font-family:Inter, sans-serif; color:#263248;}
     .stApp {background:linear-gradient(135deg,#eff3fb 0%,#f7f8fc 56%,#edf2fb 100%);}
     .block-container {max-width:1280px; padding:1.1rem 1.15rem 1.35rem;}
@@ -45,6 +44,10 @@ st.markdown(
     .privacy {font-size:.72rem;line-height:1.45;color:#84603a;border-left:3px solid #f1bf70;padding:.55rem .65rem;background:#fffaf1;border-radius:4px;margin:.7rem 0;}
     .result-card {background:#f9fbff;border:1px solid #e8edf6;border-radius:16px;padding:1rem;margin-top:.7rem;}
     div[data-testid="stMetric"] {background:#fff;border:1px solid #edf0f6;border-radius:12px;padding:.7rem;} div[data-testid="stMetricLabel"] {font-size:.69rem;color:#8f9db3;} div[data-testid="stMetricValue"] {font-size:1rem;color:#27344b;}
+    [data-testid="stSidebar"] {background:linear-gradient(180deg,#102f4b 0%,#0b2238 100%);border-right:1px solid rgba(255,255,255,.08);}
+    [data-testid="stSidebar"] [data-testid="stSidebarContent"] {padding-top:1.1rem;} [data-testid="stSidebar"] * {color:#e9f2fb;}
+    .sidebar-brand {font-size:1.28rem;font-weight:800;letter-spacing:-.06em;margin-bottom:.15rem;}.sidebar-brand span{color:#73a7ff}.sidebar-caption {font-size:.73rem;line-height:1.5;color:#adc0d2 !important;margin-bottom:1.5rem;}
+    .side-nav {font-size:.73rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#87a5c0 !important;margin:1.25rem 0 .55rem;}.side-step {padding:.62rem .72rem;border-radius:10px;background:rgba(255,255,255,.065);font-size:.79rem;margin:.38rem 0;color:#e7f0fb !important;}.side-step span{color:#79aaff !important;font-family:'DM Mono',monospace;margin-right:.5rem;}
     @media(max-width:800px){.workspace{padding:1.1rem 0 0}.left-panel{min-height:0}.app-shell{padding:.85rem}.block-container{padding:.45rem}.empty-workspace{height:220px}}
     </style>""",
     unsafe_allow_html=True,
@@ -87,6 +90,18 @@ def app_data() -> pd.DataFrame | None:
     return st.session_state.get("source_data")
 
 
+with st.sidebar:
+    st.markdown('<div class="sidebar-brand">Bootstrap<span>MD</span></div><p class="sidebar-caption">A focused workspace for research-grade synthetic data.</p>', unsafe_allow_html=True)
+    st.markdown('<p class="side-nav">Workflow</p>', unsafe_allow_html=True)
+    st.markdown('<div class="side-step"><span>01</span>Import dataset</div>', unsafe_allow_html=True)
+    st.markdown('<div class="side-step"><span>02</span>Confirm schema</div>', unsafe_allow_html=True)
+    st.markdown('<div class="side-step"><span>03</span>Generate data</div>', unsafe_allow_html=True)
+    st.markdown('<div class="side-step"><span>04</span>Review scorecard</div>', unsafe_allow_html=True)
+    st.divider()
+    st.caption("Fast mode keeps modeling and scorecards responsive on large CSV files.")
+    st.caption("Privacy signals are empirical diagnostics, not a release guarantee.")
+
+
 st.markdown('<div class="app-shell"><p class="brand">Bootstrap<span>MD</span></p><p class="tagline">Clinical research data synthesis workspace</p>', unsafe_allow_html=True)
 left, right = st.columns([.94, 2.06], gap="large")
 
@@ -116,7 +131,7 @@ with left:
         st.button("Generate synthetic data", disabled=True, type="primary")
     else:
         included = st.session_state.schema.loc[st.session_state.schema["include"], "column"].tolist()
-        population = st.selectbox("Target population size", [len(data), max(250, len(data) * 2), max(500, len(data) * 5), max(1000, len(data) * 10)], format_func=lambda n: f"{n:,} synthetic patients")
+        population = st.selectbox("Target population size", [1_000, 2_000, 5_000, 10_000], format_func=lambda n: f"{n:,} synthetic patients")
         target = st.selectbox("Utility outcome", ["None"] + included, help="Select a categorical outcome to calculate predictive utility.")
         methods = st.multiselect("Methods", ["Smoothed bootstrap", "SMOTE-NC", "Gaussian copula", "CART sequential"], default=["Smoothed bootstrap", "SMOTE-NC", "Gaussian copula", "CART sequential"])
         goal = st.selectbox("Primary goal", ["Balanced", "Maximize utility", "Maximize privacy"])

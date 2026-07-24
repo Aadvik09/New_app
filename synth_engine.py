@@ -8,14 +8,16 @@ from typing import Iterable
 import numpy as np
 import pandas as pd
 from scipy.stats import ks_2samp, norm, rankdata
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, roc_auc_score
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import LabelEncoder
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 
 RNG = np.random.default_rng(42)
 VALID_TYPES = ("continuous", "integer", "categorical")
+MAX_MODEL_ROWS = 4_000
+MAX_SCORECARD_ROWS = 1_500
 
 
 @dataclass
@@ -124,7 +126,7 @@ def smote_nc(data: pd.DataFrame, types: dict[str, str], size: int, target: str |
     if not target or target not in types or types[target] == "continuous":
         return smoothed_bootstrap(data, types, size, random_state)
     rng = np.random.default_rng(random_state)
-    source = _clean(data, types)
+    source = _model_sample(_clean(data, types), MAX_MODEL_ROWS, random_state)
     counts = source[target].value_counts()
     weights = pd.Series(1 / counts, index=counts.index)
     weights = weights / weights.sum()
@@ -160,7 +162,7 @@ def smote_nc(data: pd.DataFrame, types: dict[str, str], size: int, target: str |
 
 def gaussian_copula(data: pd.DataFrame, types: dict[str, str], size: int, random_state: int = 42) -> pd.DataFrame:
     rng = np.random.default_rng(random_state)
-    source = _clean(data, types)
+    source = _model_sample(_clean(data, types), MAX_MODEL_ROWS, random_state)
     encoded = pd.DataFrame(index=source.index)
     encoders: dict[str, LabelEncoder] = {}
     for col, kind in types.items():
@@ -189,7 +191,7 @@ def gaussian_copula(data: pd.DataFrame, types: dict[str, str], size: int, random
 
 def cart_sequential(data: pd.DataFrame, types: dict[str, str], size: int, random_state: int = 42) -> pd.DataFrame:
     rng = np.random.default_rng(random_state)
-    source = _clean(data, types)
+    source = _model_sample(_clean(data, types), MAX_MODEL_ROWS, random_state)
     columns = list(types)
     generated = pd.DataFrame(index=range(size))
     for index, col in enumerate(columns):
@@ -230,9 +232,18 @@ def _feature_matrix(train: pd.DataFrame, new: pd.DataFrame, types: dict[str, str
     return np.column_stack(left), np.column_stack(right)
 
 
+def _model_sample(data: pd.DataFrame, limit: int, random_state: int = 42) -> pd.DataFrame:
+    """Keep modeling predictable on large clinical exports without changing output size."""
+    if len(data) <= limit:
+        return data.reset_index(drop=True)
+    return data.sample(n=limit, random_state=random_state).reset_index(drop=True)
+
+
 def evaluate(real: pd.DataFrame, synthetic: pd.DataFrame, types: dict[str, str], target: str | None, method: str) -> Evaluation:
-    original = _clean(real, types)
-    fake = _clean(synthetic, types)
+    # Scorecards are comparative diagnostics: bounded stratified-sized samples keep
+    # the UI responsive even when the uploaded CSV contains hundreds of thousands of rows.
+    original = _model_sample(_clean(real, types), MAX_SCORECARD_ROWS)
+    fake = _model_sample(_clean(synthetic, types), MAX_SCORECARD_ROWS)
     numeric = [c for c, t in types.items() if t in ("continuous", "integer")]
     categorical = [c for c, t in types.items() if t == "categorical"]
     ks = float(np.mean([ks_2samp(original[c], fake[c]).statistic for c in numeric])) if numeric else 0.0
@@ -261,7 +272,7 @@ def _propensity_mse(real: pd.DataFrame, fake: pd.DataFrame, types: dict[str, str
     labels = np.r_[np.zeros(len(real)), np.ones(len(fake))]
     joint = pd.concat([real, fake], ignore_index=True)
     X, _ = _feature_matrix(joint, joint, types)
-    model = RandomForestClassifier(n_estimators=80, min_samples_leaf=max(2, len(joint) // 60), random_state=42)
+    model = LogisticRegression(max_iter=250, solver="lbfgs", random_state=42)
     model.fit(X, labels)
     return float(np.mean((model.predict_proba(X)[:, 1] - 0.5) ** 2) * 4)
 
@@ -274,8 +285,8 @@ def _utility(real: pd.DataFrame, fake: pd.DataFrame, types: dict[str, str], targ
         return None
     X_real, X_fake = _feature_matrix(real[list(features)], fake[list(features)], features)
     y_real, y_fake = real[target].astype(str), fake[target].astype(str)
-    model_tstr = RandomForestClassifier(n_estimators=100, min_samples_leaf=2, random_state=42).fit(X_fake, y_fake)
-    model_trtr = RandomForestClassifier(n_estimators=100, min_samples_leaf=2, random_state=42).fit(X_real, y_real)
+    model_tstr = DecisionTreeClassifier(max_depth=8, min_samples_leaf=4, random_state=42).fit(X_fake, y_fake)
+    model_trtr = DecisionTreeClassifier(max_depth=8, min_samples_leaf=4, random_state=42).fit(X_real, y_real)
     baseline = accuracy_score(y_real, model_trtr.predict(X_real))
     tstr = accuracy_score(y_real, model_tstr.predict(X_real))
     return float(np.clip(100 * tstr / max(baseline, 1e-6), 0, 100))
