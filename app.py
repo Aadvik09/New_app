@@ -22,7 +22,12 @@ st.set_page_config(page_title="BootstrapMD", page_icon="B", layout="wide", initi
 st.markdown(
     """<style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap');
-    [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"], #MainMenu, footer {display:none !important;}
+    /* A quiet, light utility strip keeps the sidebar reopen control usable. */
+    [data-testid="stHeader"] {background:#f2f6fc !important;height:3.25rem !important;border:0 !important;}
+    [data-testid="stToolbar"] {background:transparent !important;padding:.4rem .7rem !important;}
+    [data-testid="stDecoration"], #MainMenu, footer, [data-testid="stMainMenuButton"], [data-testid="stBaseButton-header"] {display:none !important;}
+    [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"] {display:flex !important;visibility:visible !important;align-items:center !important;justify-content:center !important;width:38px !important;height:38px !important;min-width:38px !important;min-height:38px !important;background:#123550 !important;border:1px solid rgba(255,255,255,.28) !important;border-radius:10px !important;box-shadow:0 6px 16px rgba(12,35,55,.2) !important;}
+    [data-testid="stSidebarCollapsedControl"] svg, [data-testid="stExpandSidebarButton"] svg {fill:#fff !important;}
     html, body, [class*="css"] {font-family:Inter, sans-serif; color:#263248;}
     .stApp {background:linear-gradient(135deg,#eff3fb 0%,#f7f8fc 56%,#edf2fb 100%);}
     .block-container {max-width:1280px; padding:1.1rem 1.15rem 1.35rem;}
@@ -46,6 +51,8 @@ st.markdown(
     div[data-testid="stMetric"] {background:#fff;border:1px solid #edf0f6;border-radius:12px;padding:.7rem;} div[data-testid="stMetricLabel"] {font-size:.69rem;color:#8f9db3;} div[data-testid="stMetricValue"] {font-size:1rem;color:#27344b;}
     [data-testid="stSidebar"] {background:linear-gradient(180deg,#102f4b 0%,#0b2238 100%);border-right:1px solid rgba(255,255,255,.08);}
     [data-testid="stSidebar"] [data-testid="stSidebarContent"] {padding-top:1.1rem;} [data-testid="stSidebar"] * {color:#e9f2fb;}
+    [data-testid="stSidebarCollapseButton"] {visibility:visible !important;display:block !important;}
+    [data-testid="stSidebarCollapseButton"] button {background:rgba(255,255,255,.08) !important;border-radius:8px !important;}
     .sidebar-brand {font-size:1.28rem;font-weight:800;letter-spacing:-.06em;margin-bottom:.15rem;}.sidebar-brand span{color:#73a7ff}.sidebar-caption {font-size:.73rem;line-height:1.5;color:#adc0d2 !important;margin-bottom:1.5rem;}
     .side-nav {font-size:.73rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#87a5c0 !important;margin:1.25rem 0 .55rem;}.side-step {padding:.62rem .72rem;border-radius:10px;background:rgba(255,255,255,.065);font-size:.79rem;margin:.38rem 0;color:#e7f0fb !important;}.side-step span{color:#79aaff !important;font-family:'DM Mono',monospace;margin-right:.5rem;}
     @media(max-width:800px){.workspace{padding:1.1rem 0 0}.left-panel{min-height:0}.app-shell{padding:.85rem}.block-container{padding:.45rem}.empty-workspace{height:220px}}
