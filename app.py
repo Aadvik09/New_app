@@ -73,13 +73,15 @@ st.markdown(
     div[data-testid="stLayoutWrapper"]:has(.tour-panel) [data-testid="stButton"] button:disabled {opacity:.42 !important;background:#1a2c42 !important;color:#9aabc0 !important;border-color:#314b66 !important;}
     .tour-step-0 ~ [data-testid="stFileUploader"], body:has(.tour-step-0) [data-testid="stFileUploader"] {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:6px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
     body:has(.tour-step-0) [data-testid="stFileUploader"]::before {content:'Start here  ↓';position:absolute;left:50%;top:-49px;transform:translateX(-50%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;letter-spacing:.01em;box-shadow:0 8px 18px rgba(47,109,240,.28);}
-    body:has(.tour-step-1) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
-    body:has(.tour-step-1) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child::before {content:'Your setup panel  ←';position:absolute;right:-20px;top:22px;transform:translateX(100%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
-    body:has(.tour-step-2) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
-    body:has(.tour-step-2) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child::before {content:'Results appear here  ↓';position:absolute;left:50%;top:18px;transform:translateX(-50%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
-    body:has(.tour-step-3) [data-testid="stSidebar"] {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
-    body:has(.tour-step-3) [data-testid="stSidebar"]::after {content:'Replay this guide anytime  ↓';position:absolute;left:20px;bottom:84px;white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
-    @media (max-width:800px) {div[data-testid="stLayoutWrapper"]:has(.tour-panel){right:16px;bottom:16px;}body:has(.tour-step-1) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child::before{display:none;}}
+    body:has(.tour-step-1) [data-testid="stDataEditor"] {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:6px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
+    body:has(.tour-step-1) [data-testid="stDataEditor"]::before {content:'Use each Type dropdown to correct an inference  ↓';position:absolute;left:50%;top:-49px;transform:translateX(-50%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
+    body:has(.tour-step-2) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
+    body:has(.tour-step-2) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child::before {content:'Your setup panel  ←';position:absolute;right:-20px;top:22px;transform:translateX(100%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
+    body:has(.tour-step-3) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
+    body:has(.tour-step-3) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child::before {content:'Results appear here  ↓';position:absolute;left:50%;top:18px;transform:translateX(-50%);white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
+    body:has(.tour-step-4) [data-testid="stSidebar"] {position:relative;z-index:1000001;outline:3px solid #4e81ec;outline-offset:-3px;box-shadow:0 0 0 9999px rgba(12,27,46,.52);}
+    body:has(.tour-step-4) [data-testid="stSidebar"]::after {content:'Replay this guide anytime  ↓';position:absolute;left:20px;bottom:84px;white-space:nowrap;background:#2f6df0;color:#fff;padding:8px 12px;border-radius:999px;font-size:.78rem;font-weight:800;box-shadow:0 8px 18px rgba(47,109,240,.28);}
+    @media (max-width:800px) {div[data-testid="stLayoutWrapper"]:has(.tour-panel){right:16px;bottom:16px;}body:has(.tour-step-1) [data-testid="stDataEditor"]::before,body:has(.tour-step-2) div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child::before{display:none;}}
     @media(max-width:800px){div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:first-child,div[data-testid="stHorizontalBlock"]:has(.step-label) > [data-testid="stColumn"]:last-child{min-height:0;padding:1.35rem;border-left:0;border-top:1px solid #eef1f6}div[data-testid="stHorizontalBlock"]:has(.step-label){min-height:0}.block-container{padding:.45rem}.empty-workspace{height:220px}}
     </style>""",
     unsafe_allow_html=True,
@@ -124,8 +126,9 @@ def app_data() -> pd.DataFrame | None:
 
 TOUR_STEPS = [
     {"title": "Bring in a source dataset", "copy": "Drop in a CSV here. We will infer its structure before you generate anything.", "tip": "The highlighted upload card is the first stop."},
+    {"title": "Confirm or correct column types", "copy": "After upload, use the Type dropdown in every row to correct any inferred type before generating synthetic data.", "tip": "Use continuous for measurements, integer for counts, categorical for labels; uncheck Include to exclude a column."},
     {"title": "Choose your synthesis setup", "copy": "This panel sets the population size, goal, and generation methods. It unlocks after your CSV is loaded.", "tip": "Start with the suggested settings for a fast first run."},
-    {"title": "Work in the analysis space", "copy": "Your data preview, editable schema, checks, scorecard, and downloads all appear here.", "tip": "This area updates as you move through the workflow."},
+    {"title": "Work in the analysis space", "copy": "Your data preview, checks, scorecard, and downloads all appear here after you confirm the schema.", "tip": "This area updates as you move through the workflow."},
     {"title": "Keep the guide close", "copy": "The sidebar keeps the workflow visible. You can reopen this guide whenever you need it.", "tip": "Use the Play quick tour button at the bottom of the sidebar."},
 ]
 
@@ -152,7 +155,10 @@ def show_tour() -> None:
             st.session_state.tour_open = False
             st.rerun()
         label = "Finish" if step_index == len(TOUR_STEPS) - 1 else "Next"
-        if next_step.button(label, key="tour_next", type="primary", use_container_width=True):
+        needs_upload = step_index == 0 and app_data() is None
+        if needs_upload:
+            st.caption("Upload a CSV to continue this guided step.")
+        if next_step.button(label, key="tour_next", type="primary", use_container_width=True, disabled=needs_upload):
             st.session_state.tour_open = step_index != len(TOUR_STEPS) - 1
             st.session_state.tour_step = min(step_index + 1, len(TOUR_STEPS) - 1)
             st.rerun()
@@ -241,7 +247,8 @@ with right:
     if data is None:
         st.markdown('<div class="empty-workspace"><div class="empty-icon">▥</div><strong>Workspace empty</strong><p>Upload a dataset to begin statistical synthesis.</p></div>', unsafe_allow_html=True)
     else:
-        st.markdown("#### Dataset readiness")
+        st.markdown("#### Confirm or correct column types")
+        st.caption("We infer each column automatically. Use the **Type** dropdown in any row to correct it before you generate. Uncheck **Include** to leave a column out of synthesis.")
         schema = st.data_editor(
             st.session_state.schema,
             key="schema_editor",
