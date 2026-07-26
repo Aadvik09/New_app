@@ -155,10 +155,7 @@ def show_tour() -> None:
             st.session_state.tour_open = False
             st.rerun()
         label = "Finish" if step_index == len(TOUR_STEPS) - 1 else "Next"
-        needs_upload = step_index == 0 and app_data() is None
-        if needs_upload:
-            st.caption("Upload a CSV to continue this guided step.")
-        if next_step.button(label, key="tour_next", type="primary", use_container_width=True, disabled=needs_upload):
+        if next_step.button(label, key="tour_next", type="primary", use_container_width=True):
             st.session_state.tour_open = step_index != len(TOUR_STEPS) - 1
             st.session_state.tour_step = min(step_index + 1, len(TOUR_STEPS) - 1)
             st.rerun()
