@@ -119,6 +119,9 @@ def process_upload(uploaded_file) -> str | None:
         st.session_state.upload_key = key
         st.session_state.pop("outputs", None)
         st.session_state.pop("evaluations", None)
+        if st.session_state.get("tour_open") and st.session_state.get("tour_step") == 0:
+            st.session_state.tour_step = 1
+            st.rerun()
     except Exception as exc:
         return f"We could not read that CSV: {exc}"
     return None
@@ -126,6 +129,12 @@ def process_upload(uploaded_file) -> str | None:
 
 def app_data() -> pd.DataFrame | None:
     return st.session_state.get("source_data")
+
+
+def advance_tour_after_schema_edit() -> None:
+    """Move the walkthrough forward when its highlighted schema task is completed."""
+    if st.session_state.get("tour_open") and st.session_state.get("tour_step") == 1:
+        st.session_state.tour_step = 2
 
 
 TOUR_STEPS = [
@@ -253,6 +262,7 @@ with right:
         schema = st.data_editor(
             st.session_state.schema,
             key="schema_editor",
+            on_change=advance_tour_after_schema_edit,
             hide_index=True,
             width="stretch",
             column_config={
