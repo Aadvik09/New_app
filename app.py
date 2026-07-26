@@ -46,6 +46,10 @@ st.markdown(
     .dataset-ready {background:#ecf8f2;border:1px solid #c8ebda;border-radius:12px;padding:.7rem .8rem;color:#277557;font-size:.78rem;margin:.75rem 0 1rem;}
     .config-title {font-size:.68rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#a0aec3;margin:.35rem 0 .45rem;}
     [data-testid="stSelectbox"] div[data-baseweb="select"] > div, [data-testid="stMultiSelect"] div[data-baseweb="select"] > div {border-radius:12px;border-color:#e5eaf4;background:#fff;min-height:46px;}
+    /* Data-editor dropdowns render in a portal, outside the workspace card. Give every popup a clear light surface. */
+    div[data-baseweb="popover"], div[data-baseweb="popover"] [role="listbox"] {background:#fff !important;color:#27344b !important;border-color:#dfe7f3 !important;}
+    div[data-baseweb="popover"] [role="option"] {background:#fff !important;color:#27344b !important;font-weight:600 !important;}
+    div[data-baseweb="popover"] [role="option"]:hover, div[data-baseweb="popover"] [role="option"][aria-selected="true"] {background:#eaf1ff !important;color:#1f5fd2 !important;}
     div.stButton > button {border:0;border-radius:12px;background:#7ca4f7;color:white;font-weight:800;min-height:52px;width:100%;box-shadow:0 8px 18px rgba(79,124,224,.18);}.stButton>button:hover {background:#4e81ec;color:white;}
     [data-testid="stSelectbox"] button,[data-testid="stSelectbox"] [role="combobox"] {background:#fff !important;color:#52637c !important;border-color:#e5eaf4 !important;}
     [data-testid="stSelectbox"] button:disabled,[data-testid="stSelectbox"] [role="combobox"][aria-disabled="true"] {background:#fbfcff !important;color:#a4b0c2 !important;}
