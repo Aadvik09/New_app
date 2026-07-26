@@ -26,8 +26,10 @@ st.markdown(
     [data-testid="stHeader"] {position:absolute !important;background:transparent !important;height:0 !important;border:0 !important;z-index:1000000 !important;}
     [data-testid="stToolbar"] {background:transparent !important;padding:0 !important;}
     [data-testid="stDecoration"], #MainMenu, footer, [data-testid="stMainMenuButton"], [data-testid="stBaseButton-header"] {display:none !important;}
-    [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"] {display:flex !important;visibility:visible !important;position:fixed !important;left:14px !important;top:14px !important;align-items:center !important;justify-content:center !important;width:38px !important;height:38px !important;min-width:38px !important;min-height:38px !important;background:#111827 !important;border:1px solid rgba(255,255,255,.24) !important;border-radius:10px !important;box-shadow:0 6px 16px rgba(12,35,55,.24) !important;}
-    [data-testid="stSidebarCollapsedControl"] svg, [data-testid="stExpandSidebarButton"] svg {fill:#fff !important;}
+    [data-testid="stSidebarCollapsedControl"], [data-testid="stExpandSidebarButton"] {display:flex !important;visibility:visible !important;position:fixed !important;left:14px !important;top:14px !important;align-items:center !important;justify-content:center !important;width:42px !important;height:42px !important;min-width:42px !important;min-height:42px !important;background:#111827 !important;border:1px solid rgba(255,255,255,.24) !important;border-radius:10px !important;box-shadow:0 6px 16px rgba(12,35,55,.24) !important;}
+    [data-testid="stSidebarCollapsedControl"] button, [data-testid="stExpandSidebarButton"] button {display:flex !important;align-items:center !important;justify-content:center !important;width:100% !important;height:100% !important;background:transparent !important;border:0 !important;color:#fff !important;}
+    [data-testid="stSidebarCollapsedControl"] svg, [data-testid="stExpandSidebarButton"] svg {width:22px !important;height:22px !important;color:#fff !important;stroke:#fff !important;stroke-width:2.7px !important;fill:none !important;opacity:1 !important;}
+    [data-testid="stSidebarCollapsedControl"] svg path, [data-testid="stExpandSidebarButton"] svg path {stroke:#fff !important;fill:none !important;}
     html, body, [class*="css"] {font-family:Inter, sans-serif; color:#263248;}
     .stApp {background:#eef2f9;}
     .block-container {max-width:1320px; padding:4.4rem 1.2rem 1.4rem;}
