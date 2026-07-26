@@ -30,6 +30,9 @@ st.markdown(
     [data-testid="stSidebarCollapsedControl"] button, [data-testid="stExpandSidebarButton"] button {display:flex !important;align-items:center !important;justify-content:center !important;width:100% !important;height:100% !important;background:transparent !important;border:0 !important;color:#fff !important;}
     [data-testid="stSidebarCollapsedControl"] svg, [data-testid="stExpandSidebarButton"] svg {width:22px !important;height:22px !important;color:#fff !important;stroke:#fff !important;stroke-width:2.7px !important;fill:none !important;opacity:1 !important;}
     [data-testid="stSidebarCollapsedControl"] svg path, [data-testid="stExpandSidebarButton"] svg path {stroke:#fff !important;fill:none !important;}
+    /* Render our own menu glyph so the control stays legible across Streamlit versions. */
+    [data-testid="stSidebarCollapsedControl"]::after, [data-testid="stExpandSidebarButton"]::after {content:'☰';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Arial,sans-serif;font-size:24px;font-weight:700;line-height:1;pointer-events:none;z-index:2;text-shadow:0 1px 2px rgba(0,0,0,.28);}
+    [data-testid="stSidebarCollapsedControl"] svg, [data-testid="stExpandSidebarButton"] svg {visibility:hidden !important;}
     html, body, [class*="css"] {font-family:Inter, sans-serif; color:#263248;}
     .stApp {background:#eef2f9;}
     .block-container {max-width:1320px; padding:4.4rem 1.2rem 1.4rem;}
