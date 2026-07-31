@@ -56,6 +56,9 @@ st.markdown(
     div[data-baseweb="popover"] [role="option"] {background:#fff !important;color:#27344b !important;font-weight:600 !important;}
     div[data-baseweb="popover"] [role="option"]:hover, div[data-baseweb="popover"] [role="option"][aria-selected="true"] {background:#eaf1ff !important;color:#1f5fd2 !important;}
     div.stButton > button {border:0;border-radius:12px;background:#7ca4f7;color:white;font-weight:800;min-height:52px;width:100%;box-shadow:0 8px 18px rgba(79,124,224,.18);}.stButton>button:hover {background:#4e81ec;color:white;}
+    div.st-key-generate_synthetic button, div.st-key-reset_workspace button {min-height:44px !important;padding:.5rem .9rem !important;}
+    div.st-key-reset_workspace button {background:#dc3d4d !important;box-shadow:0 8px 18px rgba(190,45,61,.18) !important;}
+    div.st-key-reset_workspace button:hover {background:#bd2939 !important;}
     [data-testid="stSelectbox"] button,[data-testid="stSelectbox"] [role="combobox"] {background:#fff !important;color:#52637c !important;border-color:#e5eaf4 !important;}
     [data-testid="stSelectbox"] button:disabled,[data-testid="stSelectbox"] [role="combobox"][aria-disabled="true"] {background:#fbfcff !important;color:#a4b0c2 !important;}
     div.stButton > button:disabled {background:#eef3ff !important;color:#aab9d1 !important;box-shadow:none !important;opacity:1 !important;}
@@ -136,6 +139,26 @@ def app_data() -> pd.DataFrame | None:
     return st.session_state.get("source_data")
 
 
+def reset_workspace() -> None:
+    """Return the app to its original, no-data state."""
+    for key in (
+        "source_data",
+        "schema",
+        "upload_key",
+        "outputs",
+        "evaluations",
+        "goal",
+        "schema_editor",
+    ):
+        st.session_state.pop(key, None)
+    # A widget's value cannot be changed after it has rendered. Rotating its key
+    # creates a fresh uploader on the next run and leaves the prior file behind.
+    st.session_state.upload_version = st.session_state.get("upload_version", 0) + 1
+    st.session_state.tour_open = True
+    st.session_state.tour_step = 0
+    st.rerun()
+
+
 def advance_tour_after_schema_edit() -> None:
     """Move the walkthrough forward when its highlighted schema task is completed."""
     if st.session_state.get("tour_open") and st.session_state.get("tour_step") == 1:
@@ -152,6 +175,7 @@ TOUR_STEPS = [
 
 st.session_state.setdefault("tour_open", True)
 st.session_state.setdefault("tour_step", 0)
+st.session_state.setdefault("upload_version", 0)
 
 
 def show_tour() -> None:
@@ -209,6 +233,7 @@ with left:
         accept_multiple_files=False,
         label_visibility="collapsed",
         help="CSV files up to 500 MB are supported.",
+        key=f"upload_file_{st.session_state.upload_version}",
     )
     st.markdown('<p class="upload-note"><strong>Import CSV data</strong>Drag and drop, or click above to browse.<br>CSV only - up to 500 MB</p>', unsafe_allow_html=True)
     if uploaded is not None:
@@ -223,7 +248,9 @@ with left:
     if data is None:
         st.markdown('<p class="config-title">Target population size</p>')
         st.selectbox("Target population size", ["Upload a dataset first"], disabled=True, label_visibility="collapsed")
-        st.button("Generate synthetic data", disabled=True, type="primary")
+        generate_column, reset_column = st.columns([2.2, 1], gap="small")
+        generate_column.button("Generate synthetic data", key="generate_synthetic", disabled=True, type="primary", use_container_width=True)
+        reset_column.button("Reset", key="reset_workspace", disabled=True, use_container_width=True)
     else:
         included = st.session_state.schema.loc[st.session_state.schema["include"], "column"].tolist()
         population = st.selectbox("Target population size", [1_000, 2_000, 5_000, 10_000], format_func=lambda n: f"{n:,} synthetic patients")
@@ -231,7 +258,11 @@ with left:
         methods = st.multiselect("Methods", ["Smoothed bootstrap", "SMOTE-NC", "Gaussian copula", "CART sequential"], default=["Smoothed bootstrap", "SMOTE-NC", "Gaussian copula", "CART sequential"])
         goal = st.selectbox("Primary goal", ["Balanced", "Maximize utility", "Maximize privacy"])
         st.markdown('<div class="privacy"><strong>Privacy limit:</strong> these are empirical risk signals, not a differential-privacy guarantee. Do not upload PHI to an unapproved environment.</div>', unsafe_allow_html=True)
-        run = st.button("Generate synthetic data", type="primary", disabled=not methods)
+        generate_column, reset_column = st.columns([2.2, 1], gap="small")
+        run = generate_column.button("Generate synthetic data", key="generate_synthetic", type="primary", disabled=not methods, use_container_width=True)
+        reset = reset_column.button("Reset", key="reset_workspace", use_container_width=True)
+        if reset:
+            reset_workspace()
         if run:
             types = schema_types(st.session_state.schema)
             active = data[list(types)]
