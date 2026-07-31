@@ -129,7 +129,6 @@ def process_upload(uploaded_file) -> str | None:
         st.session_state.pop("evaluations", None)
         if st.session_state.get("tour_open") and st.session_state.get("tour_step") == 0:
             st.session_state.tour_step = 1
-            st.rerun()
     except Exception as exc:
         return f"We could not read that CSV: {exc}"
     return None
@@ -154,8 +153,6 @@ def reset_workspace() -> None:
     # A widget's value cannot be changed after it has rendered. Rotating its key
     # creates a fresh uploader on the next run and leaves the prior file behind.
     st.session_state.upload_version = st.session_state.get("upload_version", 0) + 1
-    st.session_state.tour_open = True
-    st.session_state.tour_step = 0
     st.rerun()
 
 
@@ -203,10 +200,6 @@ def show_tour() -> None:
             st.rerun()
 
 
-if st.session_state.tour_open:
-    show_tour()
-
-
 with st.sidebar:
     st.markdown('<div class="sidebar-brand">Bootstrap<span>MD</span></div><p class="sidebar-caption">A focused workspace for research-grade synthetic data.</p>', unsafe_allow_html=True)
     st.markdown('<p class="side-nav">Workflow</p>', unsafe_allow_html=True)
@@ -246,7 +239,7 @@ with left:
     st.markdown('<div class="step-label step-muted"><span class="step-number">2</span>Synthesis config</div>', unsafe_allow_html=True)
     data = app_data()
     if data is None:
-        st.markdown('<p class="config-title">Target population size</p>')
+        st.markdown('<p class="config-title">Target population size</p>', unsafe_allow_html=True)
         st.selectbox("Target population size", ["Upload a dataset first"], disabled=True, label_visibility="collapsed")
         generate_column, reset_column = st.columns([2.2, 1], gap="small")
         generate_column.button("Generate synthetic data", key="generate_synthetic", disabled=True, type="primary", use_container_width=True)
@@ -338,3 +331,9 @@ with right:
         report = f"BootstrapMD synthesis report\nGenerated: {datetime.now():%Y-%m-%d %H:%M}\nGoal: {st.session_state.goal}\n\n" + scorecard.to_csv(index=False)
         download_columns[-1].download_button("Download scorecard", report.encode(), file_name="bootstrapmd_scorecard.csv", mime="text/csv")
         st.markdown("</div>", unsafe_allow_html=True)
+
+
+# Render the fixed-position guide after upload processing. This lets the first
+# upload advance the guide without a second, otherwise unnecessary app rerun.
+if st.session_state.tour_open:
+    show_tour()
